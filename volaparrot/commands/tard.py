@@ -34,7 +34,8 @@ from lru import LRU
 from .command import Command
 
 
-__all__ = ["EightballCommand", "RevolverCommand", "DiceCommand", "ChenCommand", "XDanielCommand"]
+__all__ = ["EightballCommand", "RevolverCommand", "DiceCommand", "ChenCommand", "XDanielCommand",
+            "DotCommand"]
 
 logger = logging.getLogger(__name__)
 
@@ -141,6 +142,13 @@ class ChenCommand(Command):
         user = remainder.strip() or msg.nick
         #self.post("{}: H{}NK", user, "O" * min(50, max(1, cmd.lower().count("e"))))
         self.post("{}: M{}RC", user, "E" * min(50, max(1, cmd.lower().count("e"))))
+        return True
+
+class DotCommand(Command):
+    handlers = "...", "....", "....."
+
+    def __call__(self, cmd, remainder, msg):
+        self.post("{} = gay".format(msg.nick))
         return True
 
 class ProfanityCommand(Command):
