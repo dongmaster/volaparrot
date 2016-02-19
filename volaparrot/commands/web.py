@@ -227,6 +227,15 @@ class XTwitterCommand(WebCommand):
         imgs = [html.unescape(i.group(1))
                 for i in self.images.finditer(resp)
                 if "profile_images" not in i.group(1)]
+
+        # Not very elegant but at least it works :^)
+        for i in range(0, len(imgs)):
+            if not re.match(":orig$", imgs[i], re.I):
+                if imgs[i].find(":") != imgs[i].rfind(":"):
+                    imgs[i] = imgs[i][:imgs[i].rfind(":")]
+
+                imgs[i] += ":orig"
+
         imgs = " ".join(imgs)
         if imgs:
             info = "{title}:\n{desc}\n{imgs}".format(title=title, desc=desc, imgs=imgs)
